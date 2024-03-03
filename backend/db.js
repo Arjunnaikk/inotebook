@@ -8,5 +8,4 @@ async function connectToMongo() {
             console.log(err));
   }
 
-
 module.exports = connectToMongo;
