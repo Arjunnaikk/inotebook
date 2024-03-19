@@ -23,8 +23,7 @@ const NoteState = (props)=>{
                     
     }
     //Add a Note
-    const addNote =async (title, description, tag)=>{
-        console.log('Adding a note');
+    const addNote = async (title, description, tag)=>{
                 //API Call
                 const response = await fetch(`${host}/api/notes/addnote`, {
                     method: "POST",
@@ -50,14 +49,16 @@ const NoteState = (props)=>{
     const updateNote =async (id, title, description, tag)=>{
         //API Call
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-            method: "PUT",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "auth-header":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlNDU4ZTczMGVhOTU0ZjM0NjQ3Yzk4In0sImlhdCI6MTcwOTQ2MzgyNH0.9VQEpAxwF7aUxhN2y605eLCXkGxa9Aa8kG28pwtys_Q"
             },
             body: JSON.stringify({title, description, tag}),
             });
-                const json = response.json();
+                const json =await response.json();
+                console.log(json);
+                
         
         for (let index = 0; index < notes.length; index++) {
             const element = notes[index];
@@ -71,7 +72,16 @@ const NoteState = (props)=>{
     }
 
     //Delete a Note
-    const deleteNote = (id)=>{
+    const deleteNote =async (id)=>{
+                //API Call
+                const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth-header":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlNDU4ZTczMGVhOTU0ZjM0NjQ3Yzk4In0sImlhdCI6MTcwOTQ2MzgyNH0.9VQEpAxwF7aUxhN2y605eLCXkGxa9Aa8kG28pwtys_Q"
+                    }
+                    });
+
         const newNotes = notes.filter((note)=>{return note._id!==id})
         setNotes(newNotes)
     }

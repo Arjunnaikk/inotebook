@@ -56,12 +56,13 @@ router.put('/updatenote/:id',fetchuser ,async (req,res)=>{
         return res.status(401).send("Not allowed")
     }
         note = await Notes.findByIdAndUpdate(req.params.id,{$set:newNote},{new:true})
+        res.json(note)
     }
     catch(error){
         console.error(error.message)
         res.status(500).send("Internal server error")
     }
-    res.json({note})
+    
 })
 
 // ROUTE 4: Delete the existing note notes using DELETE "/api/auth/deletenote".login required
@@ -83,11 +84,12 @@ router.delete('/deletenote/:id',fetchuser ,async (req,res)=>{
         return res.status(401).send("Not allowed")
     }
         note = await Notes.findByIdAndDelete(req.params.id)
+        res.json(note)
     }
     catch(error){
         console.error(error.message)
         res.status(500).send("Internal server error")
     }
-    res.json({note})
+    
 })
 module.exports = router
