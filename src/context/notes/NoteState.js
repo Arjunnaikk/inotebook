@@ -33,23 +33,17 @@ const NoteState = (props)=>{
                     },
                     body: JSON.stringify({title, description, tag}),
                     });
-        const note={
-            "_id": "65e470c2ed02d4d054c9b2c9",
-            "user": "65e458e730ea954f34647c98",
-            "title": title,
-            "description": description,
-            "tag": tag,
-            "Date": "2024-03-03T12:44:54.509Z",
-            "__v": 0
-    }
+    const note =await response.json();
         setNotes(notes.concat(note))
     }
 
-    //Update a Note
-    const updateNote =async (id, title, description, tag)=>{
+    //Edit a Note
+    const editNote =async (id, title, description, tag)=>{
+        console.log(id);
+        
         //API Call
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 "auth-header":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlNDU4ZTczMGVhOTU0ZjM0NjQ3Yzk4In0sImlhdCI6MTcwOTQ2MzgyNH0.9VQEpAxwF7aUxhN2y605eLCXkGxa9Aa8kG28pwtys_Q"
@@ -59,35 +53,61 @@ const NoteState = (props)=>{
                 const json =await response.json();
                 console.log(json);
                 
-        
-        for (let index = 0; index < notes.length; index++) {
-            const element = notes[index];
-            if (element._id === id) {
-                element.title = title
-                element.description = description
-                element.tag = tag
-            }
+        // let newNotes = JSON.parse(JSON.stringify(notes))
+        // for (let index = 0; index < notes.length; index++) {
+        //     const element = newNotes[index];
+        //     if (element._id === id) {
+        //         newNotes[index].title = title
+        //         newNotes[index].description = description
+        //         newNotes[index].tag = tag
+        //         break;
+        //     }
             
-        }
+        // }
+        // setNotes(newNotes)
+        getNotes();
     }
 
     //Delete a Note
-    const deleteNote =async (id)=>{
-                //API Call
-                const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "auth-header":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlNDU4ZTczMGVhOTU0ZjM0NjQ3Yzk4In0sImlhdCI6MTcwOTQ2MzgyNH0.9VQEpAxwF7aUxhN2y605eLCXkGxa9Aa8kG28pwtys_Q"
-                    }
-                    });
+    // const deleteNote =async (id)=>{
+    //             //API Call
+    //             const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+    //                 method: "DELETE",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     "auth-header":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlNDU4ZTczMGVhOTU0ZjM0NjQ3Yzk4In0sImlhdCI6MTcwOTQ2MzgyNH0.9VQEpAxwF7aUxhN2y605eLCXkGxa9Aa8kG28pwtys_Q"
+    //                 }
+    //                 });
 
-        const newNotes = notes.filter((note)=>{return note._id!==id})
-        setNotes(newNotes)
+    //     const newNotes = notes.filter((note)=>{return note._id!==id})
+    //     setNotes(newNotes)
+    // }
+    
+    const deleteNote = async (id) => {
+        try {
+            //API Call
+            const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-header": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlNDU4ZTczMGVhOTU0ZjM0NjQ3Yzk4In0sImlhdCI6MTcwOTQ2MzgyNH0.9VQEpAxwF7aUxhN2y605eLCXkGxa9Aa8kG28pwtys_Q"
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to delete the note');
+            }
+    
+            const newNotes = notes.filter((note) => { return note._id !== id });
+            setNotes(newNotes);
+        } catch (error) {
+            console.error('Error deleting note:', error.message);
+        }
     }
     
+
         return (
-            <noteContext.Provider value={{notes,getNotes, addNote, updateNote, deleteNote}}>
+            <noteContext.Provider value={{notes,getNotes, addNote, editNote, deleteNote}}>
                 {props.children}
             </noteContext.Provider>
         )
