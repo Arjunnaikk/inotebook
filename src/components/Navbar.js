@@ -27,6 +27,10 @@ export const Navbar = () => {
         <button className="btn btn-outline-success" type="submit">Search</button>
       </form> */}
     </div>
+    <form action="submit">
+    <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
+    <Link className="btn btn-primary mx-1" to="/signup" role="button">Sign up</Link>
+    </form>
   </div>
 </nav>
     </>
