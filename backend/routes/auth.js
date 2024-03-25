@@ -92,12 +92,18 @@ router.post('/login',[
         }
 })
 
-// ROUTE 3: Get user details by using POST "/api/auth/login".login required
+// ROUTE 3: Get user details by using POST "/api/auth/getuser".login required
 router.post('/getuser',fetchuser, async(req,res)=>{
     try{
         userId = req.user.id
         const user = await User.findById(userId).select("-password")
         res.send(user)
+        // if (user) {
+        //     const { username, email } = user;
+        //     res.json({ username, email });
+        // } else {
+        //     res.status(404).json({ message: 'User not found' });
+        // }
     }
     catch(error){
         console.error(error.message)
