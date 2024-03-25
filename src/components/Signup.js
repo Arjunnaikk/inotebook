@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useContext  } from 'react'
+import { useState } from 'react'
 import { useNavigate} from 'react-router-dom'
 
 const Signup = (props) => {
@@ -21,7 +21,7 @@ const Signup = (props) => {
               console.log(json);
               if(json.success){
                   //Redirect
-                  localStorage.setItem("token",json.authtoken)
+                  localStorage.setItem("token",json.authToken)
                   navigate("/")
                   showAlert("Account Created Successfully", "success")
               }
@@ -35,6 +35,7 @@ const Signup = (props) => {
   return (
     <>
       <div className="container">
+        <h1>Sign Up Page</h1>
       <form onSubmit={handleSubmit}>
   <div className="mb-3">
     <label htmlFor="name" className="form-label">Username</label>

@@ -15,7 +15,7 @@ const NoteState = (props)=>{
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        "auth-header":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlNDU4ZTczMGVhOTU0ZjM0NjQ3Yzk4In0sImlhdCI6MTcwOTQ2MzgyNH0.9VQEpAxwF7aUxhN2y605eLCXkGxa9Aa8kG28pwtys_Q"
+                        "auth-header":localStorage.getItem("token")
                     },
                     });
                     const json =await response.json();
@@ -29,7 +29,7 @@ const NoteState = (props)=>{
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "auth-header":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlNDU4ZTczMGVhOTU0ZjM0NjQ3Yzk4In0sImlhdCI6MTcwOTQ2MzgyNH0.9VQEpAxwF7aUxhN2y605eLCXkGxa9Aa8kG28pwtys_Q"
+                        "auth-header":localStorage.getItem("token")
                     },
                     body: JSON.stringify({title, description, tag}),
                     });
@@ -46,7 +46,7 @@ const NoteState = (props)=>{
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "auth-header":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlNDU4ZTczMGVhOTU0ZjM0NjQ3Yzk4In0sImlhdCI6MTcwOTQ2MzgyNH0.9VQEpAxwF7aUxhN2y605eLCXkGxa9Aa8kG28pwtys_Q"
+                "auth-header":localStorage.getItem("token")
             },
             body: JSON.stringify({title, description, tag}),
             });
@@ -74,7 +74,7 @@ const NoteState = (props)=>{
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    "auth-header": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlNDU4ZTczMGVhOTU0ZjM0NjQ3Yzk4In0sImlhdCI6MTcwOTQ2MzgyNH0.9VQEpAxwF7aUxhN2y605eLCXkGxa9Aa8kG28pwtys_Q"
+                    "auth-header": localStorage.getItem("token")
                 }
             });
     
